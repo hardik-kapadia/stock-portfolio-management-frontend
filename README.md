@@ -1,3 +1,5 @@
+# stock-portfolio-management-frontend
+Front-end for: https://github.com/thecoderenroute/stock-portfolio-management
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
