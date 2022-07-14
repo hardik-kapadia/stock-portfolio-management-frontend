@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 import { getUserObject } from './models';
 
-import { login } from './services';
+import { login } from './services/auth';
 
 function getUser() {
   return getUserObject();
