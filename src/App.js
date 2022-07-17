@@ -5,7 +5,7 @@ import Main from './components/Main';
 
 import { possibleMainScreens } from './constants';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 const Searchbar = (props) => {
@@ -16,8 +16,13 @@ const Searchbar = (props) => {
     <div className='searchbar'>
       <input type="text" placeholder="Search for stocks" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       <input type="button" value="Search" onClick={() => {
-        props.setMainSearchTerm(searchTerm.trim());
-        props.updateScreen(possibleMainScreens[1]);
+
+        let searchQuery = searchTerm.trim();
+        if (searchQuery.length > 0) {
+          props.setMainSearchTerm();
+          props.updateScreen(possibleMainScreens[1]);
+        }
+
       }} />
     </div>
   )
@@ -42,7 +47,7 @@ function App() {
 
         <div className='main'>
           <Searchbar setMainSearchTerm={setSearchTerm} updateScreen={setMainScreen} />
-          <Main user={user} screen={mainScreen} updateScreen={setMainScreen} searchTerm={searchTerm} />
+          <Main user={user} screen={mainScreen} updateScreen={setMainScreen} searchQuery={searchTerm} />
         </div>
 
         <div className='profile' >
