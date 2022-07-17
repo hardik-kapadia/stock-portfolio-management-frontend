@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080/",
+            "url": "http://localhost:8080",
             "description": "Generated server url"
         }
     ],
@@ -153,105 +153,9 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/auth/delete": {
-            "post": {
-                "tags": [
-                    "auth-controller"
-                ],
-                "operationId": "deleteUser",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/stocks/stock": {
-            "get": {
-                "tags": [
-                    "stock-controller"
-                ],
-                "operationId": "getStock",
-                "parameters": [
-                    {
-                        "name": "symbol",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/stocks/search": {
-            "get": {
-                "tags": [
-                    "stock-controller"
-                ],
-                "operationId": "searchForStock",
-                "parameters": [
-                    {
-                        "name": "stockName",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StockSearchResult"
-                                    }
                                 }
                             }
                         }
@@ -357,28 +261,106 @@
                     }
                 }
             }
+        },
+        "/api/stocks/stock": {
+            "get": {
+                "tags": [
+                    "stock-controller"
+                ],
+                "operationId": "getStock",
+                "parameters": [
+                    {
+                        "name": "symbol",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/stocks/search": {
+            "get": {
+                "tags": [
+                    "stock-controller"
+                ],
+                "operationId": "searchForStock",
+                "parameters": [
+                    {
+                        "name": "stockName",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StockSearchResult"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/delete": {
+            "delete": {
+                "tags": [
+                    "auth-controller"
+                ],
+                "operationId": "deleteUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
-            "StockSearchResult": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "region": {
-                        "type": "string"
-                    },
-                    "symbol": {
-                        "type": "string"
-                    },
-                    "matchScore": {
-                        "type": "number",
-                        "format": "double"
-                    }
-                }
-            },
             "Investment": {
                 "type": "object",
                 "properties": {
@@ -521,6 +503,24 @@
                         "format": "double"
                     },
                     "realizedGainsPercentage": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "StockSearchResult": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "symbol": {
+                        "type": "string"
+                    },
+                    "matchScore": {
                         "type": "number",
                         "format": "double"
                     }

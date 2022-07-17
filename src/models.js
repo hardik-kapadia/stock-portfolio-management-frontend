@@ -14,9 +14,10 @@ export function getUserObject(name, email, mobileNumber, accountNumber, netInves
     }
 }
 
-export function getStockObject(symbol, ltp, previousOpen, previousClose, high, low) {
+export function getStockObject(symbol, name, ltp, previousOpen, previousClose, high, low) {
     return {
         "symbol": symbol,
+        "name": name,
         "ltp": ltp,
         "previousOpen": previousOpen,
         "previousClose": previousClose,
@@ -25,8 +26,9 @@ export function getStockObject(symbol, ltp, previousOpen, previousClose, high, l
     }
 }
 
-export function getInvestmentObject(stock, quantity, netInvested, currentValue, netProfit, netProfitPercentage, averageBuyPrice) {
+export function getInvestmentObject(id,stock, quantity, netInvested, currentValue, netProfit, netProfitPercentage, averageBuyPrice) {
     return {
+        "id":id,
         "stock": stock,
         "quantity": quantity,
         "netInvested": netInvested,

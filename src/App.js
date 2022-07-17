@@ -1,31 +1,35 @@
 import './App.css';
-import StockComponent from './components/Stock';
+
 import Profile from './components/Profile';
+import Main from './components/Main';
+
+import { possibleMainScreens } from './constants';
+
 import { useState, useEffect } from 'react';
 
-import { getUserObject } from './models';
 
-import { login } from './services/auth';
+const Searchbar = (props) => {
 
-function getUser() {
-  return getUserObject();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  return (
+    <div className='searchbar'>
+      <input type="text" placeholder="Search for stocks" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+      <input type="button" value="Search" onClick={() => {
+        props.setMainSearchTerm(searchTerm.trim());
+        props.updateScreen(possibleMainScreens[1]);
+      }} />
+    </div>
+  )
+
 }
 
 
 function App() {
 
-  const [stocks, setStocks] = useState([]);
-  const [investments, setInvestments] = useState(null);
   const [user, setUser] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(null);
-  const [addingStock, setAddingStock] = useState(false);
-  const [jwt, setJwt] = useState(null);
-
-  // useEffect(() => {
-  //   console.log("effect called")
-  //   login("abc@xyz.com", "password123");
-  //   console.log("effect ended")
-  // }, [])
+  const [mainScreen, setMainScreen] = useState(possibleMainScreens[0]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="App">
@@ -37,7 +41,8 @@ function App() {
       <div className='body'>
 
         <div className='main'>
-          {stocks.map((stock) => <StockComponent stock={stock} />)}
+          <Searchbar setMainSearchTerm={setSearchTerm} updateScreen={setMainScreen} />
+          <Main user={user} screen={mainScreen} updateScreen={setMainScreen} searchTerm={searchTerm} />
         </div>
 
         <div className='profile' >

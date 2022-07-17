@@ -1,6 +1,4 @@
-const BASE_URL = "http://localhost:8080"
-
-const AUTH_URL = "/api/auth"
+import { BASE_URL, AUTH_URL } from "../constants";
 
 export async function login(username, password) {
 
