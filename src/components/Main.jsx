@@ -1,10 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { possibleMainScreens } from "../constants";
-import { getInvestmentObject } from "../models";
-import { searchForStock } from "../services/stocks";
+import {useState, useEffect} from "react";
+import {possibleMainScreens} from "../constants";
+import {getInvestmentObject} from "../models";
+import {searchForStock} from "../services/stocks";
+import {buy} from "../services/user";
 
-const ShortStockComponent = ({ stock }) => {
+const ShortStockComponent = ({stock}) => {
     return (
         <div className='short-stock-component'>
             <div className="short-stock-first-row">
@@ -19,7 +20,7 @@ const ShortStockComponent = ({ stock }) => {
     )
 }
 
-const ShortInvestmentComponent = ({ investment }) => {
+const ShortInvestmentComponent = ({investment}) => {
     return (
         <div className='short-investment-component'>
 
@@ -28,14 +29,15 @@ const ShortInvestmentComponent = ({ investment }) => {
                 <div className="short-investment-price"> {investment.currentValue} </div>
             </div>
             <div className="second-row">
-                {investment.averageBuyPrice} {investment.quantity} {investment.netInvested} <span className="short-investment-profits"> {investment.netProfit} ({investment.netProfitPercentage}) </span>
+                {investment.averageBuyPrice} {investment.quantity} {investment.netInvested} <span
+                className="short-investment-profits"> {investment.netProfit} ({investment.netProfitPercentage}) </span>
             </div>
 
         </div>
     )
 }
 
-const FullStockIvestmentComponent = ({ investment }) => {
+const FullStockIvestmentComponent = ({investment}) => {
 
     if (!investment)
         investment = getInvestmentObject(-1, null, 0, 0, 0, 0, 0, 0, null);
@@ -44,14 +46,20 @@ const FullStockIvestmentComponent = ({ investment }) => {
 
         <div className="full-stock-investment">
 
+            <div className="full-stock-investment-buying-details">
+                {investment.quantity} {investment.averageBuyPrice} {investment.netInvested}
+            </div>
+            <div className="full-stock-investment-profit-details">
+                {investment.currentValue} {investment.netProfit} {investment.netProfitPercentage}
+            </div>
+
         </div>
 
     )
 
-
 }
 
-const FullStockComponent = ({ stock, investment }) => {
+const FullStockComponent = ({stock, investment}) => {
 
     const [investmentDetails, setInvestmentDetails] = useState(investment)
     const [tradeCount, setTradeCount] = useState(0);
@@ -62,40 +70,54 @@ const FullStockComponent = ({ stock, investment }) => {
 
                 <div className="full-stock-title-symbol-ltp">
                     <span className="full-stock-title-symbol"> </span>
-                    <span className="full-stock-ltp"></span>
+                    <span className="full-stock-ltp"> </span>
                 </div>
 
                 <div className="full-stock-adv-details">
                     <div className="full-stock-adv-details-row-1"> {stock.previousOpen} {stock.previousClose}</div>
                     <div className="full-stock-adv-details-row-2"> {stock.high} {stock.low} </div>
                 </div>
-
             </div>
 
-
+            <FullStockIvestmentComponent investment={investment}/>
 
             <div className="full-stock-trade">
-                <input type="button" value="BUY" className="full-stock-trade-button stock-buy-button" />
+                <div className="full-stock-trade-price">
+                    <input type="text" placeholder={stock.ltp} value={stock.ltp} id="full-stock-trade-price-value"/>
+                </div>
+                <input type="button" value="BUY" className="full-stock-trade-button stock-buy-button" onClick={() => {
+                    buy(stock.symbol, tradeCount, document.getElementById("full-stock-trade-price-value").value).then(
+                        (response) => {
+
+                            if (response[0] % 100 === 2) {
+                                // TODO: write success scenario - show success alert and make changes to user and investments
+                                alert("Stock purchased successfully");
+
+
+
+                            } else {
+                                // TODO: write failure scenario
+                            }
+                        }
+                    )
+                }}/>
                 <span className="full-stock-trade-counter">
-                    <input type="button" value="-" /> <span className="full-stock-trade-count">{tradeCount}</span> <input type="button" value="-" />
+                    <input type="button" value="-"/> <span className="full-stock-trade-count">{tradeCount}</span> <input
+                    type="button" value="-"/>
                 </span>
-                <input type="button" className="full-stock-trade-button stock-sell-button" value="SELL" disabled={investmentDetails ? false : true} />
+                <input type="button" className="full-stock-trade-button stock-sell-button" value="SELL"
+                       disabled={!investmentDetails}/>
             </div>
 
         </div>
     )
 }
 
-const Main = ({ user, screen, updateScreen, searchQuery, singleStock }) => {
+const Main = async ({user, screen, updateScreen, searchQuery, singleStock, updateUser}) => {
 
 
     const [stocks, setStocks] = useState([]);
     const [investments, setInvestments] = useState(user.investments);
-    const [searchTerm, setSearchTerm] = useState(searchQuery);
-
-    function searchForStocks(searchWord) {
-        setStocks(searchForStock(searchWord));
-    }
 
     useEffect(() => {
         setInvestments(user.investments);
@@ -110,7 +132,7 @@ const Main = ({ user, screen, updateScreen, searchQuery, singleStock }) => {
 
                 return (
                     <div className="main-screen all-investments">
-                        {investments.map(i => < ShortInvestmentComponent investment={i} />)}
+                        {investments.map(i => < ShortInvestmentComponent investment={i}/>)}
                     </div>
                 )
             } else {
@@ -131,13 +153,13 @@ const Main = ({ user, screen, updateScreen, searchQuery, singleStock }) => {
 
     } else if (screen === possibleMainScreens[1]) {
 
-        if (searchTerm) {
+        if (searchQuery) {
 
-            searchForStocks();
+            await searchForStock(searchQuery).then(result => setStocks(result));
 
             return (
                 <div className="main-sreen stock-search-results">
-                    {stocks.map(s => <ShortStockComponent stock={s} />)}
+                    {stocks.map(s => <ShortStockComponent stock={s}/>)}
                 </div>
             )
         } else {
@@ -152,7 +174,7 @@ const Main = ({ user, screen, updateScreen, searchQuery, singleStock }) => {
 
         if (singleStock) {
 
-            <FullStockComponent />
+            <FullStockComponent/>
 
         }
 

@@ -1,4 +1,4 @@
-import { BASE_URL, STOCK_URL } from "../constants";
+import {BASE_URL, STOCK_URL} from "../constants";
 
 export async function searchForStock(stock) {
 
@@ -7,12 +7,12 @@ export async function searchForStock(stock) {
     const response = await fetch(url, {
         "method": "GET",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
 
     })
 
-    if ((await response.status) % 100 === 2) {
+    if (response.status % 100 === 2) {
         return await response.json();
     }
 
@@ -27,11 +27,11 @@ export async function getStock(symbol) {
     const response = await fetch(url, {
         "method": "GET",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
     })
 
-    if ((await response.status) % 100 === 2) {
+    if (response.status % 100 === 2) {
         return await response.json();
     }
 
