@@ -40,7 +40,6 @@ export async function sell(investmentId, quantity, sellingPrice) {
     if (response.status % 100 === 2)
         return await response.json();
 
-
     return null;
 
 }
