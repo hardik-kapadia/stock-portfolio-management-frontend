@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { possibleMainScreens } from "../constants";
-import { searchForStock } from "../services/stocks";
+import {useState, useEffect} from "react";
+import {possibleMainScreens} from "../constants";
+import {searchForStock} from "../services/stocks";
 
-const ShortStockComponent = ({ stock }) => {
+const ShortStockComponent = ({stock}) => {
     return (
         <div className='short-stock-component'>
             <div className="short-stock-first-row">
@@ -18,7 +18,7 @@ const ShortStockComponent = ({ stock }) => {
     )
 }
 
-const ShortInvestmentComponent = ({ investment }) => {
+const ShortInvestmentComponent = ({investment}) => {
     return (
         <div className='short-investment-component'>
             <div className="short-investment-first-row">
@@ -26,23 +26,20 @@ const ShortInvestmentComponent = ({ investment }) => {
                 <div className="short-investment-price"> {investment.currentValue} </div>
             </div>
             <div className="second-row">
-                {investment.averageBuyPrice} {investment.quantity} {investment.netInvested} <span className="short-investment-profits"> {investment.netProfit} ({investment.netProfitPercentage}) </span>
+                {investment.averageBuyPrice} {investment.quantity} {investment.netInvested} <span
+                className="short-investment-profits"> {investment.netProfit} ({investment.netProfitPercentage}) </span>
             </div>
 
         </div>
     )
 }
 
-const Main = ({ user, screen, updateScreen, searchQuery }) => {
+const Main = ({user, screen, updateScreen, searchQuery, singleStock}) => {
 
 
     const [stocks, setStocks] = useState([]);
     const [investments, setInvestments] = useState(user.investments);
-    const [searchTerm, setSearchTerm] = useState(searchQuery);
-
-    function searchForStocks(searchWord) {
-        setStocks(searchForStock(searchWord));
-    }
+    const [singleStock, setSingleStock] = useState(singleStock);
 
     useEffect(() => {
         setInvestments(user.investments);
@@ -57,14 +54,14 @@ const Main = ({ user, screen, updateScreen, searchQuery }) => {
 
                 return (
                     <div className="main-screen all-investments">
-                        {investments.map(i => < ShortInvestmentComponent investment={i} />)}
+                        {investments.map(i => < ShortInvestmentComponent investment={i}/>)}
                     </div>
                 )
             } else {
                 return (
                     <div className="main-screen no-investments">
                         <h1> You don't own any stocks</h1>
-                        <h2> Good call!</h2>
+                        <h2> Good call! </h2>
                     </div>
                 )
             }
@@ -78,13 +75,15 @@ const Main = ({ user, screen, updateScreen, searchQuery }) => {
 
     } else if (screen === possibleMainScreens[1]) {
 
-        if (searchTerm) {
+        if (searchQuery) {
 
-            searchForStocks();
+            searchForStock(searchQuery).then(results => {
+                setStocks(results)
+            });
 
             return (
                 <div className="main-sreen stock-search-results">
-                    {stocks.map(s => <ShortInvestmentComponent stock={s} />)}
+                    {stocks.map(s => <ShortInvestmentComponent stock={s}/>)}
                 </div>
             )
         } else {
@@ -97,7 +96,7 @@ const Main = ({ user, screen, updateScreen, searchQuery }) => {
 
     } else if (screen === possibleMainScreens[2]) {
 
-        
+
 
     }
 
