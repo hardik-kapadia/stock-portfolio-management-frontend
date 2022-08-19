@@ -1,4 +1,4 @@
-import { BASE_URL, AUTH_URL } from "../constants";
+import {BASE_URL, AUTH_URL} from "../constants";
 
 export async function login(username, password) {
 
@@ -12,32 +12,32 @@ export async function login(username, password) {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
     })
 
-    if ((await response.status) % 100 === 2) {
+    if (response.status % 100 === 2)
         return await response.json();
-    }
 
     return null;
 
 }
 
 export async function lougout() {
+
     const url = BASE_URL + AUTH_URL + "/signout";
 
 
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
     })
 
-    return (await response.status) % 100 === 2 ? true : false;
+    return response.status % 100 === 2;
 
 }
 
@@ -57,15 +57,15 @@ export async function signUp(username, password, name, email, accountnumber, mob
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
     })
 
-    if ((await response.status) % 100 === 2) {
+    if (response.status % 100 === 2)
         return await response.json();
-    }
+
 
     return null;
 }
@@ -80,15 +80,15 @@ export async function deleteUser(password) {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
     })
 
-    if ((await response.status) % 100 === 2) {
+    if (response.status % 100 === 2)
         return await response.json();
-    }
+
 
     return null;
 }
