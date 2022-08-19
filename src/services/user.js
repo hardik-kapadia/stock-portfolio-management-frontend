@@ -1,4 +1,4 @@
-import {BASE_URL, USER_URL} from "../constants";
+import { BASE_URL, USER_URL } from "../constants";
 
 export async function getUserDetails() {
 
@@ -7,12 +7,15 @@ export async function getUserDetails() {
     const response = await fetch(url, {
         "method": "GET",
         "credentials": "same-origin",
-        "headers": new Headers({'content-type': 'application/json'}),
+        "headers": new Headers({ 'content-type': 'application/json' }),
         "mode": "cors"
     })
 
-    if (response.status % 100 === 2) {
-        return await response.json();
+
+    const temp = await response.json();
+    console.log(`temp: ${temp}`);
+    if (response.status / 100 === 2) {
+        return temp;
     }
 
     return null;
@@ -32,7 +35,7 @@ export async function sell(investmentId, quantity, sellingPrice) {
     const response = await fetch(url, {
         "method": "GET",
         "credentials": "same-origin",
-        "headers": new Headers({'content-type': 'application/json'}),
+        "headers": new Headers({ 'content-type': 'application/json' }),
         "body": body,
         "mode": "cors"
     })
@@ -60,7 +63,7 @@ export async function buy(stockSymbol, quantity, buyPrice) {
     const response = await fetch(url, {
         "method": "GET",
         "credentials": "same-origin",
-        "headers": new Headers({'content-type': 'application/json'}),
+        "headers": new Headers({ 'content-type': 'application/json' }),
         "body": JSON.stringify(body),
         "mode": "cors"
     })

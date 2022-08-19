@@ -39,7 +39,9 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
 
     function updateUserDeets() {
-        setUser(getUserDetails().then(response => response,e => null));
+        console.log('something')
+        getUserDetails().then(response => setUser(response), e => null);
+        console.log(`user: ${user}`)
     }
 
     return (
@@ -58,9 +60,14 @@ function App() {
                 </div>
 
                 <div className='profile'>
-                    <Profile user={user} logout={() => {
-                        setUser(null)
-                    }} />
+                    <Profile
+                        user={user}
+                        logout={() => {
+                            setUser(null)
+                        }
+                        }
+                        updateUserDeets={updateUserDeets}
+                    />
                 </div>
 
             </div>
