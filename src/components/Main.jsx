@@ -124,7 +124,6 @@ const FullStockComponent = ({stock, investment, updateUser}) => {
 
 const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}) => {
 
-
     const [stocks, setStocks] = useState([]);
     const [investments, setInvestments] = useState(user ? user.investments : null);
 
@@ -145,6 +144,8 @@ const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}
 
     useEffect(() => {
         setInvestments(user ? user.investments : null);
+        console.log("user is now: ",user);
+        console.log("invs now: ",investments);
     }, [user])
 
 
@@ -152,6 +153,9 @@ const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}
 
         if (user) {
 
+            console.log("user, ---> ",user);
+            if(!investments)
+                setInvestments(user.investments);
             if (investments.length > 0) {
 
                 return (

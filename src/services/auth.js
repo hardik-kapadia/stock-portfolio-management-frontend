@@ -1,4 +1,15 @@
-import { BASE_URL, AUTH_URL } from "../constants";
+import {BASE_URL, AUTH_URL} from "../constants";
+
+function printCookies() {
+    const cookieArr = document.cookie.split(";");
+    console.log("all cks: ", document.cookie);
+    for (let i = 0; i < cookieArr.length; i++) {
+        const cookiePair = cookieArr[i].split("=");
+        console.log(`${cookiePair[0]} -> ${cookiePair[1]}`)
+    }
+    return null;
+}
+
 
 export async function login(username, password) {
 
@@ -11,14 +22,17 @@ export async function login(username, password) {
 
     const response = await fetch(url, {
         "method": "POST",
-        "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "credentials": "include",
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
-        "mode": "no-cors"
+        "mode": "cors"
 
     })
     console.log(`response: ${response}`);
     console.log(`status: ${response.status}`)
+
+    console.log("cookies: ", printCookies())
+
     if (response.status / 100 === 2) {
         const r = await response.json();
         console.log(r)
@@ -37,7 +51,7 @@ export async function lougout() {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
     })
 
@@ -61,7 +75,7 @@ export async function signUp(username, password, name, email, accountnumber, mob
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
@@ -84,7 +98,7 @@ export async function deleteUser(password) {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
