@@ -12,7 +12,6 @@ export async function getUserDetails() {
     })
 
     const temp = await response.json();
-    console.log(`temp: ${temp}`);
 
     if (response.status === 200) {
         return temp;

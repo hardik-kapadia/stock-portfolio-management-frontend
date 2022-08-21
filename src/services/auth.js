@@ -1,16 +1,11 @@
 import {BASE_URL, AUTH_URL} from "../constants";
 
-function printCookies() {
-    const cookieArr = document.cookie.split(";");
-    console.log("all cks: ", document.cookie);
-    for (let i = 0; i < cookieArr.length; i++) {
-        const cookiePair = cookieArr[i].split("=");
-        console.log(`${cookiePair[0]} -> ${cookiePair[1]}`)
-    }
-    return null;
-}
-
-
+/**
+ *
+ * @param {string} username
+ * @param {string} password
+ * @returns {Promise<null|any>}
+ */
 export async function login(username, password) {
 
     const url = BASE_URL + AUTH_URL + "/signin";
@@ -27,39 +22,43 @@ export async function login(username, password) {
         "body": JSON.stringify(body),
         "mode": "cors"
 
-    })
-    console.log(`response: ${response}`);
-    console.log(`status: ${response.status}`)
+    });
 
-    console.log("cookies: ", printCookies())
-
-    if (response.status / 100 === 2) {
-        const r = await response.json();
-        console.log(r)
-        return r;
-    }
+    if (response.status / 100 === 2)
+        return await response.json();
 
     return null;
-
 }
 
-export async function lougout() {
+/**
+ *
+ * @returns {Promise<boolean>}
+ */
+export async function logOut() {
 
     const url = BASE_URL + AUTH_URL + "/signout";
 
-
     const response = await fetch(url, {
         "method": "POST",
-        "credentials": "same-origin",
+        "credentials": "include",
         "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
-    })
+    });
 
-    return response.status % 100 === 2;
-
+    return response.status / 100 === 2;
 }
 
-export async function signUp(username, password, name, email, accountnumber, mobilenumber) {
+/**
+ *
+ * @param {string} username
+ * @param {string} password
+ * @param {string} name
+ * @param {string} email
+ * @param {string} accountNumber
+ * @param {string} mobileNumber
+ * @returns {Promise<null|any>}
+ */
+export async function signUp(username, password, name, email, accountNumber, mobileNumber) {
 
     const url = BASE_URL + AUTH_URL + "/signup";
 
@@ -68,32 +67,33 @@ export async function signUp(username, password, name, email, accountnumber, mob
         "password": password,
         "name": name,
         "email": email,
-        "accountnumber": accountnumber,
-        "mobilenumber": mobilenumber
+        "accountNumber": accountNumber,
+        "mobileNumber": mobileNumber
     }
 
     const response = await fetch(url, {
         "method": "POST",
-        "credentials": "same-origin",
+        "credentials": "include",
         "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
-
     })
 
-    if (response.status % 100 === 2)
+    if (response.status / 100 === 2)
         return await response.json();
-
 
     return null;
 }
 
+/**
+ *
+ * @param password
+ * @returns {Promise<null|any>}
+ */
 export async function deleteUser(password) {
     const url = BASE_URL + AUTH_URL + "/delete";
 
-    let body = {
-        "password": password
-    }
+    let body = {"password": password};
 
     const response = await fetch(url, {
         "method": "POST",
@@ -101,12 +101,10 @@ export async function deleteUser(password) {
         "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
+    });
 
-    })
-
-    if (response.status % 100 === 2)
+    if (response.status / 100 === 2)
         return await response.json();
-
 
     return null;
 }

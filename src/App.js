@@ -5,9 +5,9 @@ import Main from './components/Main';
 
 import {possibleMainScreens} from './constants';
 
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {getUserDetails} from "./services/user";
-
+import {logOut} from "./services/auth";
 
 const Searchbar = (props) => {
 
@@ -16,7 +16,7 @@ const Searchbar = (props) => {
     return (
         <div className='searchbar'>
             <input type="text" placeholder="Search for stocks" value={searchTerm}
-                   onChange={(e) => setSearchTerm(e.target.value)}/>
+                   onChange={e => setSearchTerm(e.target.value)}/>
             <input type="button" value="Search" onClick={() => {
 
                 let searchQuery = searchTerm.trim();
@@ -28,9 +28,7 @@ const Searchbar = (props) => {
             }}/>
         </div>
     )
-
 }
-
 
 function App() {
 
@@ -39,24 +37,19 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
 
     function updateUserDeets() {
-
-        console.log('something');
-
-        getUserDetails().then(
-            response => {
-                console.log("response is: ", response);
-                console.log("invvvvs of respo: ", response.investments);
-                setUser(response);
-                console.log("1111111111 epic user: ", user);
-            }
-            , e => console.log(e)
-        );
-
+        getUserDetails().then(response => setUser(response), e => console.log(e));
     }
 
-    useEffect(() => {
-        console.log("!!!!!!!!!!!user is now----: ", user)
-    }, [user])
+    function logUserOut() {
+        console.log("logging out now!!!!!!!!!");
+        setUser(null)
+        logOut().then(response => {
+            if (response)
+                setUser(null);
+            else
+                console.log("Couldn't log out!");
+        }, e => console.log(e));
+    }
 
     return (
         <div className="App">
@@ -76,11 +69,7 @@ function App() {
                 <div className='profile'>
                     <Profile
                         user={user}
-                        logout={() => {
-                            console.log("logging out noww!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                            setUser(null)
-                        }
-                        }
+                        logout={logUserOut}
                         updateUserDeets={updateUserDeets}
                     />
                 </div>

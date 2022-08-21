@@ -1,5 +1,5 @@
 import React from "react";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {possibleMainScreens} from "../constants";
 import {getInvestmentObject} from "../models";
 import {searchForStock} from "../services/stocks";
@@ -94,7 +94,7 @@ const FullStockComponent = ({stock, investment, updateUser}) => {
                                 alert("Stock purchased successfully");
 
                             } else {
-                                alert("Error occured by purchasing stock!");
+                                alert("Error occurred by purchasing stock!");
                             }
                         }
                     )
@@ -125,7 +125,6 @@ const FullStockComponent = ({stock, investment, updateUser}) => {
 const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}) => {
 
     const [stocks, setStocks] = useState([]);
-    const [investments, setInvestments] = useState(user ? user.investments : null);
 
     function getUserInvestmentFromStock(stock) {
 
@@ -142,25 +141,15 @@ const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}
 
     }
 
-    useEffect(() => {
-        setInvestments(user ? user.investments : null);
-        console.log("user is now: ",user);
-        console.log("invs now: ",investments);
-    }, [user])
-
-
     if (screen === possibleMainScreens[0]) {
 
         if (user) {
 
-            console.log("user, ---> ",user);
-            if(!investments)
-                setInvestments(user.investments);
-            if (investments.length > 0) {
+            if (user.investments.length > 0) {
 
                 return (
                     <div className="main-screen all-investments">
-                        {investments.map(i => < ShortInvestmentComponent investment={i}/>)}
+                        {user.investments.map(i => < ShortInvestmentComponent investment={i}/>)}
                     </div>
                 )
             } else {
@@ -186,7 +175,7 @@ const Main = ({user, screen, updateScreen, searchQuery, singleStock, updateUser}
             searchForStock(searchQuery).then(result => setStocks(result));
 
             return (
-                <div className="main-sreen stock-search-results">
+                <div className="main-screen stock-search-results">
                     {stocks.map(s => <ShortStockComponent stock={s}/>)}
                 </div>
             )
