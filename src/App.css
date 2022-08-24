@@ -1,1 +1,20 @@
+#left-div{
+    max-width: 85%%;
+}
 
+#right-div{
+    max-width: 15%;
+}
+
+.boderless-button{
+    color: blue;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+}
+
+
+#top-div{
+    min-height: 98vh;
+}
