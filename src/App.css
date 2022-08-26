@@ -1,9 +1,13 @@
 #left-div{
-    max-width: 85%%;
+    max-width: 80%;
+    align-items: center;
+    text-align: center;
+    margin: auto 0;
 }
 
 #right-div{
-    max-width: 15%;
+    max-width: 20%;
+    margin: auto 0;
 }
 
 .boderless-button{
@@ -17,4 +21,11 @@
 
 #top-div{
     min-height: 98vh;
+}
+
+#signup-page-login{
+    border: none;
+    outline: none;
+    background: none;
+    color: blue;
 }

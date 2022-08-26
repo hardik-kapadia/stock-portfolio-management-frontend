@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { login } from "../services/auth";
-
+import SignupForm from "./SignupForm";
 
 const LoginForm = (props) => {
 
@@ -33,27 +33,7 @@ const LoginForm = (props) => {
     )
 }
 
-const SignupForm = (props) => {
-    return (
-        <div className="user-signup">
-            <div className="mb-3">
-                <label for="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" />
-            </div>
-            <div className="mb-3 form-check">
-                <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                <label className="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-            <input type="button" value="login" onClick={() => props.switchToLogIn()} />
-        </div>
-    )
-}
+
 
 
 const Profile = (props) => {
@@ -77,7 +57,7 @@ const Profile = (props) => {
         if (signedUp)
             return <LoginForm updateUserDeets={props.updateUserDeets} switchToSignUp={() => setSignedUp(false)} />
         else
-            return <SignupForm switchToLogIn={() => setSignedUp(true)} />
+            return <SignupForm updateUserDeets={props.updateUserDeets} switchToLogIn={() => setSignedUp(true)} />
 
     }
 }

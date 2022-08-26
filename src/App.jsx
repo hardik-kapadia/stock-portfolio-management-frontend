@@ -54,8 +54,8 @@ function App() {
         <div className="App">
 
 
-            <div id='top-div' className='d-flex body justify-content-evenly align-items-center'>
-                <div className="left" id='left-div'>
+            <div id='top-div' className='body d-flex'>
+                <div className="left flex-fill" id='left-div'>
                     <Searchbar setMainSearchTerm={setSearchTerm} updateScreen={setMainScreen} />
                     <Main user={user} screen={mainScreen} updateScreen={setMainScreen} searchQuery={searchTerm}
                         updateUser={updateUserDeets} />
@@ -63,7 +63,7 @@ function App() {
                         <p>summary</p>
                     </div>
                 </div>
-                <div className="right" id='right-div'>
+                <div className="right flex-fill" id='right-div'>
                     <Profile
                         user={user}
                         logout={logUserOut}
