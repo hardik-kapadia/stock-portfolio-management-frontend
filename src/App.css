@@ -1,1 +1,31 @@
+#left-div{
+    max-width: 80%;
+    align-items: center;
+    text-align: center;
+    margin: auto 0;
+}
 
+#right-div{
+    max-width: 20%;
+    margin: auto 0;
+}
+
+.boderless-button{
+    color: blue;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+}
+
+
+#top-div{
+    min-height: 98vh;
+}
+
+#signup-page-login{
+    border: none;
+    outline: none;
+    background: none;
+    color: blue;
+}
