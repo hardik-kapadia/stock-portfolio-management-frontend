@@ -17,11 +17,11 @@ const LoginForm = (props) => {
         <div className="container d-flex align-items-center justify-content-center">
             <div id="login-form" className="user-login d-flex flex-column justify-content-center align-items-center">
                 <div className="mb-3">
-                    <label for="exampleInputEmail1" className="form-label">Email address</label>
+                    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input value={username} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={e => setUsername(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Password</label>
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input value={password} type="password" className="form-control" id="exampleInputPassword1" onChange={e => setPassword(e.target.value)} />
                 </div>
                 <button onClick={signIn} type="submit" className="btn btn-primary mb-2">Submit</button>

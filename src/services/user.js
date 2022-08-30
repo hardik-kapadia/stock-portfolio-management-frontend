@@ -13,6 +13,8 @@ export async function getUserDetails() {
 
     const temp = await response.json();
 
+    console.log("temp: " + temp);
+
     if (response.status === 200) {
         return temp;
     }
@@ -51,7 +53,7 @@ export async function buy(stockSymbol, quantity, buyPrice) {
     const url = BASE_URL + USER_URL + "/buy";
 
     if (!parseFloat(buyPrice))
-        throw "Not a valid buyPrice"
+        throw Error("Not a valid buyPrice")
 
     let body = {
         "stockSymbol": stockSymbol,

@@ -3,11 +3,11 @@ import './App.css';
 import Profile from './components/Profile';
 import Main from './components/Main';
 
-import { possibleMainScreens } from './constants';
+import {possibleMainScreens} from './constants';
 
-import { useState } from 'react';
-import { getUserDetails } from "./services/user";
-import { logOut } from "./services/auth";
+import {useState} from 'react';
+import {getUserDetails} from "./services/user";
+import {logOut} from "./services/auth";
 
 const Searchbar = (props) => {
 
@@ -16,7 +16,7 @@ const Searchbar = (props) => {
     return (
         <div className='searchbar'>
             <input type="text" placeholder="Search for stocks" value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)} />
+                   onChange={e => setSearchTerm(e.target.value)}/>
             <input type="button" value="Search" onClick={() => {
 
                 let searchQuery = searchTerm.trim();
@@ -25,7 +25,7 @@ const Searchbar = (props) => {
                     props.updateScreen(possibleMainScreens[1]);
                 }
 
-            }} />
+            }}/>
         </div>
     )
 }
@@ -37,7 +37,10 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
 
     function updateUserDeets() {
-        getUserDetails().then(response => setUser(response), e => console.log(e));
+        getUserDetails().then(response => setUser(response), e => {
+            console.log(e);
+            logUserOut();
+        });
     }
 
     function logUserOut() {
@@ -56,10 +59,10 @@ function App() {
 
             <div id='top-div' className='body d-flex'>
                 <div className="left flex-fill" id='left-div'>
-                    <Searchbar setMainSearchTerm={setSearchTerm} updateScreen={setMainScreen} />
+                    <Searchbar setMainSearchTerm={setSearchTerm} updateScreen={setMainScreen}/>
                     <Main user={user} screen={mainScreen} updateScreen={setMainScreen} searchQuery={searchTerm}
-                        updateUser={updateUserDeets} />
-                    <div >
+                          updateUser={updateUserDeets}/>
+                    <div>
                         <p>summary</p>
                     </div>
                 </div>

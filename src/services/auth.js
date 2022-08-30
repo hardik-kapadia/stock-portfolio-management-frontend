@@ -1,4 +1,4 @@
-import { BASE_URL, AUTH_URL } from "../constants";
+import {BASE_URL, AUTH_URL} from "../constants";
 
 /**
  *
@@ -18,7 +18,7 @@ export async function login(username, password) {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "include",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
 
@@ -41,7 +41,7 @@ export async function logOut() {
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "include",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "mode": "cors"
     });
 
@@ -50,7 +50,6 @@ export async function logOut() {
 
 /**
  *
- * @param {string} username
  * @param {string} password
  * @param {string} name
  * @param {string} email
@@ -58,12 +57,11 @@ export async function logOut() {
  * @param {string} mobileNumber
  * @returns {Promise<null|any>}
  */
-export async function signUp(username, password, name, email, accountNumber, mobileNumber) {
+export async function signUp(email, password, name, accountNumber, mobileNumber) {
 
     const url = BASE_URL + AUTH_URL + "/signUp";
 
     let body = {
-        "username": username,
         "password": password,
         "name": name,
         "email": email,
@@ -74,7 +72,7 @@ export async function signUp(username, password, name, email, accountNumber, mob
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "include",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
     })
@@ -95,12 +93,12 @@ export async function signUp(username, password, name, email, accountNumber, mob
 export async function deleteUser(password) {
     const url = BASE_URL + AUTH_URL + "/delete";
 
-    let body = { "password": password };
+    let body = {"password": password};
 
     const response = await fetch(url, {
         "method": "POST",
         "credentials": "same-origin",
-        "headers": new Headers({ 'content-type': 'application/json' }),
+        "headers": new Headers({'content-type': 'application/json'}),
         "body": JSON.stringify(body),
         "mode": "cors"
     });
