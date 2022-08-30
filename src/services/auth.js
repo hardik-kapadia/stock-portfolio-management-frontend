@@ -8,7 +8,7 @@ import {BASE_URL, AUTH_URL} from "../constants";
  */
 export async function login(username, password) {
 
-    const url = BASE_URL + AUTH_URL + "/signin";
+    const url = BASE_URL + AUTH_URL + "/signIn";
 
     let body = {
         "username": username,
@@ -36,7 +36,7 @@ export async function login(username, password) {
  */
 export async function logOut() {
 
-    const url = BASE_URL + AUTH_URL + "/signout";
+    const url = BASE_URL + AUTH_URL + "/signOut";
 
     const response = await fetch(url, {
         "method": "POST",
@@ -60,7 +60,7 @@ export async function logOut() {
  */
 export async function signUp(username, password, name, email, accountNumber, mobileNumber) {
 
-    const url = BASE_URL + AUTH_URL + "/signup";
+    const url = BASE_URL + AUTH_URL + "/signUp";
 
     let body = {
         "username": username,

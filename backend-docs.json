@@ -77,7 +77,7 @@
                 }
             }
         },
-        "/api/auth/signup": {
+        "/api/auth/signUp": {
             "post": {
                 "tags": [
                     "auth-controller"
@@ -110,7 +110,7 @@
                 }
             }
         },
-        "/api/auth/signout": {
+        "/api/auth/signOut": {
             "post": {
                 "tags": [
                     "auth-controller"
@@ -130,7 +130,7 @@
                 }
             }
         },
-        "/api/auth/signin": {
+        "/api/auth/signIn": {
             "post": {
                 "tags": [
                     "auth-controller"
